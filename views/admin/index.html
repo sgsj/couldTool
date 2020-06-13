@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    <script src="./javascripts/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <form id="addtoolform">
+        <span>工具名：</span><input type="text" name="toolname">
+        <br>
+        <span>简　介：</span><textarea name="brief" id="" cols="30" rows="10"></textarea>
+        <br>
+        <span>LOGO：</span><input type="file" name="image" id="img">
+        <br>
+        <span>链　接：</span><input type="text" name="url">
+        <br>
+        <input type="submit" value="添加">
+        <a id="addtool" href="">增加</a>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            console.log('加载完毕！');
+            $('#addtool').on('click',function () {
+                console.log('点击');
+                let formData = new FormData();
+                formData.append('toolname',$("#addtoolform input[name='toolname']").val());
+                formData.append('brief',$("#addtoolform input[name='brief']").val());
+                formData.append('logo',$("#addtoolform input[name='image']")[0].files[0]);
+                formData.append('url',$("#addtoolform input[name='url']").val());
+                alert(formData);
+                // let toolname = $("#addtoolform input[name='toolname']").val();
+                // let brief = $("#addtoolform input[name='brief']").val();
+                // let logo = $("#addtoolform input[name='image']").val();
+                // let url = $("#addtoolform input[name='url']").val();
+                console.log(formData);
+                $.ajax({
+                    type: 'post',
+                    contentType: false,
+                    url: 'admin/addtool',
+                    dataType: 'json',
+                    data: formData,
+                    processData: false,
+                    success:function(msg){
+                        alert(msg);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

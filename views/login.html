@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./javascripts/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <%= title %>
+    <div class="login">
+        <span>用户名：</span><input type="text" name="name">
+        <br>
+        <span>密  码：</span><input type="password" name="password">
+        <br>
+        <a id="login" href="">登录</a>
+    </div>
+    <form class="register">
+        <span>用户名：</span><input type="text" name="name">
+        <br>
+        <span>密　码：</span><input type="password" name="password">
+        <br>
+        <span>性　别：</span><input type="radio" name="sex" value="男">男　<input type="radio" name="sex" value="女">女
+        <br>
+        <span>年　龄：</span><input type="number" name="age">
+        <br>
+        <a id="register" href="">注册</a>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $('#login').on('click',function () {
+                let username = $(".login input[type='text']").val();
+                let pwd = $(".login input[type='password']").val();
+                console.log(username,pwd);
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: '/login/submit',
+                    dataType: 'json',
+                    data: JSON.stringify({'name':username,'password':pwd}),
+                    success: function (msg) {
+                        console.log('成功：',msg);
+                        alert(msg.code);
+                    }
+                });
+            })
+            $('#register').on('click',function () {
+                let username = $(".register input[type='text']").val();
+                let pwd = $(".register input[type='password']").val();
+                let sex = $(".register input[type='radio']:checked").val();
+                let age = $(".register input[type='number']").val();
+                console.log(username,pwd);
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: '/login/register',
+                    dataType: 'json',
+                    data: JSON.stringify({'name':username,'password':pwd,'sex':sex,'age':age}),
+                    success: function (msg) {
+                        console.log('成功：',msg);
+                        alert(msg.code);
+                    }
+                });
+            })
+        });
+    </script>
+</body>
+</html>
