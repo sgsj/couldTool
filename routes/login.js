@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const DB = require('../mongodb/db');
+const token = require('../middleware/token');
 
 router.prefix('/login')
 
@@ -13,11 +14,13 @@ router.post('/submit', async (ctx, next)=>{
   console.log('执行：',loginData,ctx.request);
   let dbfin =  await DB.find('tags',loginData);
   console.log('数据库查询结果：',dbfin);
-  let obj = {code: 200, msg: '登录成功！'};
+  let obj = {};
   if (dbfin.length == 0){
-    obj.code = 400
-    obj.msg = '用户名或密码错误！'
-  } 
+    obj = {code: 400,msg: '用户名或密码错误！'}
+  } else {
+    let userkey = token({user:dbfin[0].user,id:dbfin[0].id});
+    obj = {code: 200, msg: '登录成功！',userkey}
+  }
   ctx.body = obj;
 })
 router.post('/register', async (ctx, next)=>{
