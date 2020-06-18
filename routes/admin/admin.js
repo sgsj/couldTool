@@ -1,13 +1,33 @@
 const router = require('koa-router')()
-const DB = require('../mongodb/db');
+const DB = require('../../mongodb/db');
+const untoken = require('../../middleware/untoken');
 
 router.prefix('/admin')
 
 router.get('/', async (ctx, next)=>{
   await ctx.render('admin/index',{});
 })
-router.get('/test', async (ctx, next)=>{
-  await ctx.render('admin/test',{});
+router.get('/gettools', async (ctx, next)=>{
+  let token = ctx.header.authorization;
+  console.log('token:', token);
+  if (token) {
+    let decodetk = untoken(token);
+    console.log('解析token', decodetk);
+    if (decodetk && decodetk.exp <= new Date()/1000) {
+      ctx.body = {
+        code: 4,
+        message: 'token过期！'
+      }
+    } else {
+      let tools = await DB.find('tags');
+      console.log('工具查询结果：', tools);
+      ctx.body = {
+        code: 200,
+        message: '获取成功！',
+        tools
+      }
+    }
+  }
 })
 router.post('/tool', async (ctx, next)=>{
   let toolData = ctx.request.body;

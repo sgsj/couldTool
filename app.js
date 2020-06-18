@@ -10,8 +10,8 @@ const path = require('path')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-const login = require('./routes/login')
-const admin = require('./routes/admin')
+const login = require('./routes/admin/login')
+const admin = require('./routes/admin/admin')
 
 // error handler
 onerror(app)
@@ -20,7 +20,9 @@ onerror(app)
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*');
   if (ctx.method == 'OPTIONS') {
-    
+    console.log('options');
+    ctx.status = 200;
+    await next();
   } else {
     await next();
   }

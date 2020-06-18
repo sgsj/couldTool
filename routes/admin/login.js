@@ -1,6 +1,6 @@
 const router = require('koa-router')()
-const DB = require('../mongodb/db');
-const token = require('../middleware/token');
+const DB = require('../../mongodb/db');
+const token = require('../../middleware/token');
 
 router.prefix('/login')
 
@@ -11,7 +11,6 @@ router.get('/', async (ctx, next)=>{
 })
 router.post('/submit', async (ctx, next)=>{
   let loginData = ctx.request.body;
-  console.log('执行：',loginData,ctx.request);
   let dbfin =  await DB.find('tags',loginData);
   console.log('数据库查询结果：',dbfin);
   let obj = {};
