@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const serect = 'tool';
+const serect = 'gjtkyz';
 module.exports = (token) => {
     if (token) {
         let tk = token.split(' ')[1];

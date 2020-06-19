@@ -19,8 +19,14 @@ onerror(app)
 // middlewares
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*');
+  // ctx.set('Access-Control-Allow-Methods', '*');
+  // ctx.set('Access-Control-Allow-Headers', 'content-type,token,id');
+  // ctx.set('Access-Control-Request-Headers', 'Origin, X-Requested-With, content-Type, Accept, Authorization');
   if (ctx.method == 'OPTIONS') {
     console.log('options');
+    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT,DELETE,OPTIONS,PATCH');
+    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     ctx.status = 200;
     await next();
   } else {
@@ -36,7 +42,7 @@ app.use(koaBody({
     keepExtensions: true,
     maxFieldsSize: 2*1024*1024,
     onFileBegin: (name,file)=>{
-      console.log('koabody_name:',name,'file:',file)
+      // name: 数据名，file: 数据值
     }
   }
 }))

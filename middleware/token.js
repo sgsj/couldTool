@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const serect = 'tool';
+const serect = 'gjtkyz';
 module.exports = (userinfo) => {
     const token = jwt.sign({
         user: userinfo.user,
