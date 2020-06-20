@@ -8,6 +8,7 @@ router.prefix('/admin')
 router.get('/', async (ctx, next)=>{
   await ctx.render('admin/index',{});
 })
+
 router.get('/gettools', async (ctx, next)=>{
   let token = ctx.header.authorization;
   console.log('token:', token);
@@ -28,14 +29,18 @@ router.get('/gettools', async (ctx, next)=>{
         tools
       }
     }
+  }else{
+    ctx.body = {code: 4,message: '请登录！'}
   }
 })
+
 router.post('/tool', async (ctx, next)=>{
   let toolData = ctx.request.body;
   let dbin =  await DB.insert('tags',toolData);
   let obj = {code: 200,data:{ msg: '登录成功！'}};
   ctx.body = obj;
 })
+
 router.post('/addtool', async (ctx, next)=>{
   let toolData = ctx.request.body;
   let fileData = ctx.request.files;
