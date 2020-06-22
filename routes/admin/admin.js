@@ -21,7 +21,7 @@ router.get('/gettools', async (ctx, next)=>{
         message: 'token过期！'
       }
     } else {
-      let tools = await DB.find('tags');
+      let tools = await DB.find('tools');
       console.log('工具查询结果：', tools);
       ctx.body = {
         code: 200,
@@ -49,7 +49,7 @@ router.post('/addtool', async (ctx, next)=>{
   let logopath = fileData.logo.path;
   toolData.logourl = logopath.substr( logopath.indexOf('upload') );
   console.log(toolData.logourl);
-  let addtodb =  await DB.insert('tags',toolData);
+  let addtodb =  await DB.insert('tools',toolData);
   console.log('数据插入结果：',dbfin);
   let obj = {};
   if(addtodb){

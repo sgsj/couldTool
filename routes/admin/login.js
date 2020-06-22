@@ -11,7 +11,7 @@ router.get('/', async (ctx, next)=>{
 })
 router.post('/submit', async (ctx, next)=>{
   let loginData = ctx.request.body;
-  let dbfin =  await DB.find('tags',loginData);
+  let dbfin =  await DB.find('admin',loginData);
   console.log('数据库查询结果：',dbfin);
   let obj = {};
   if (dbfin.length == 0){
