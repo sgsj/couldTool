@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const DB = require('../../mongodb/db');
+const DB = require('../../db/db');
 const token = require('../../middleware/token');
 
 router.prefix('/login')
@@ -35,4 +35,4 @@ router.get('/bar', async (ctx, next)=>{
   ctx.body = 'this is a users/bar response'
 })
 
-module.exports = router
+module.exports = router.routes();

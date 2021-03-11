@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const {MongoClient} = require('mongodb');
 
-const DB = require('../mongodb/db');
+const DB = require('../db/db');
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
@@ -19,4 +19,4 @@ router.get('/json', async (ctx, next) => {
   }
 })
 
-module.exports = router
+module.exports = router.routes();

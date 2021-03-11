@@ -1,5 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
+const router = require('koa-router')()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
@@ -9,9 +10,7 @@ const render = require('koa-art-template')
 const path = require('path')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
-const login = require('./routes/admin/login')
-const admin = require('./routes/admin/admin')
+const admin = require('./routes/admin')
 
 // error handler
 onerror(app)
@@ -67,10 +66,10 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(login.routes(), login.allowedMethods())
-app.use(admin.routes(), admin.allowedMethods())
+router.use("/index",index);
+router.use("/admin",admin);
+
+app.use(router.routes(), router.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
