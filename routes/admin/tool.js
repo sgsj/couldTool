@@ -1,7 +1,7 @@
 const router = require('koa-router')();
 const DB = require('../../db/db');
 const untoken = require('../../middleware/untoken');
-const db = require('/db/db');
+// const db = require('../../db/db');
 
 // router.prefix('/tool');
 

@@ -2,12 +2,24 @@ const router = require('koa-router')()
 const DB = require('../../db/db');
 const token = require('../../middleware/token');
 
-router.prefix('/login')
+// router.prefix('/login')
 
 router.get('/', async (ctx, next)=>{
-  await ctx.render('login', {
-    title: '登录!'
-  })
+  console.log("loginData>>>");
+  // ctx.body = 'this is a login!'
+
+  let loginData = ctx.request.body;
+  console.log("loginData------------>>>",loginData);
+  let dbfin =  await DB.findUser('admin',loginData);
+  console.log('数据库查询结果：',dbfin);
+  let obj = {};
+  if (dbfin.length == 0){
+    obj = {code: 400,msg: '用户名或密码错误！'}
+  } else {
+    let userkey = token({user:dbfin[0].user,id:dbfin[0].id});
+    obj = {code: 200, msg: '登录成功！',userkey}
+  }
+  ctx.body = obj;
 })
 router.post('/submit', async (ctx, next)=>{
   let loginData = ctx.request.body;

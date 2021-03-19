@@ -36,15 +36,37 @@ let sqlService = {
     },
 
     //数据库操作方法
+    //查找账号
     findUser: function(name,pwd){
         let _sql = `select * form users where name="${name}", pwd="${pwd}";` //传值类型 1
         return sqlService.query(_sql);
     },
+    //添加账号
     addUser: function(obj){
         let _sql = "insert into users set name=?,pwd=?,email=?,phone=?;"
         return sqlService.query(_sql,obj);
     },
 
+    //工具-分页查询
+    getTools: function(arr){
+        let _sql = `select * form tools limit ?,?;`
+        return sqlService.query(_sql,arr);
+    },
+    //工具-添加
+    addTool: function(obj){
+        let _sql = "insert into tools set name=?,url=?,brief=?,imgUrl=?;"
+        return sqlService.query(_sql,obj);
+    },
+    //工具-删除
+    delTool: function(obj){
+        let _sql = "delete from tools where id=?;"
+        return sqlService.query(_sql,obj);
+    },
+    //工具-修改
+    editTool: function(obj){
+        let _sql = "update tools set name=?,url=?,brief=?,imgUrl=? where id=?;"
+        return sqlService.query(_sql,obj);
+    },
 }
 
 module.exports = sqlService;

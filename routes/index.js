@@ -1,6 +1,4 @@
 const router = require('koa-router')()
-const {MongoClient} = require('mongodb');
-
 const DB = require('../db/db');
 
 router.get('/', async (ctx, next) => {
