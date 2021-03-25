@@ -37,9 +37,9 @@ let sqlService = {
 
     //数据库操作方法
     //查找账号
-    findUser: function(name,pwd){
-        let _sql = `select * form users where name="${name}", pwd="${pwd}";` //传值类型 1
-        return sqlService.query(_sql);
+    findUser: function(obj){
+        let _sql = "select * from users where name=? and pwd=?;"
+        return sqlService.query(_sql,obj);
     },
     //添加账号
     addUser: function(obj){
@@ -49,7 +49,7 @@ let sqlService = {
 
     //工具-分页查询
     getTools: function(arr){
-        let _sql = `select * form tools limit ?,?;`
+        let _sql = `select * from tools limit ?,?;`
         return sqlService.query(_sql,arr);
     },
     //工具-添加

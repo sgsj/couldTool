@@ -9,6 +9,12 @@ router.get('/', async (ctx, next)=>{
   await ctx.render('admin/index',{});
 })
 
+router.post('/test', async (ctx, next)=>{
+  console.log("test>>>",ctx.request.body);
+  console.log("test22>>>",ctx.request.files);
+  ctx.body = {code: 2,message: 'aaaa'}
+})
+
 router.post('/get', async (ctx, next)=>{
   let token = ctx.header.authorization;
   console.log('token:', token);
@@ -21,7 +27,7 @@ router.post('/get', async (ctx, next)=>{
         message: 'token过期！'
       }
     } else {
-      let tools = await DB.find('tools');
+      let tools = await DB.getTools([1,10]);
       console.log('工具查询结果：', tools);
       ctx.body = {
         code: 200,
@@ -42,6 +48,25 @@ router.post('/tool', async (ctx, next)=>{
 })
 
 router.post('/add', async (ctx, next)=>{
+  let toolData = ctx.request.body;
+  let fileData = ctx.request.files;
+  console.log('执行：',toolData);
+  console.log('文件路径：',fileData);
+  let logopath = fileData.logo.path;
+  toolData.logourl = logopath.substr( logopath.indexOf('upload') );
+  console.log(toolData.logourl);
+  let addtodb =  await DB.insert('tools',toolData);
+  console.log('数据插入结果：',dbfin);
+  let obj = {};
+  if(addtodb){
+    obj = {code: 200, message: '添加成功！'}
+  }else{
+    obj = {code: 400, message: '添加失败！'}
+  }
+  ctx.body = obj;
+})
+
+router.post('/upload', async (ctx, next)=>{
   let toolData = ctx.request.body;
   let fileData = ctx.request.files;
   console.log('执行：',toolData);

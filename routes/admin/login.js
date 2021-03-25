@@ -4,13 +4,14 @@ const token = require('../../middleware/token');
 
 // router.prefix('/login')
 
-router.get('/', async (ctx, next)=>{
-  console.log("loginData>>>");
+router.post('/', async (ctx, next)=>{
+  console.log("loginData>>>",ctx);
   // ctx.body = 'this is a login!'
 
-  let loginData = ctx.request.body;
+  let loginData = ctx.request.body,
+      data = [loginData.name,loginData.password];
   console.log("loginData------------>>>",loginData);
-  let dbfin =  await DB.findUser('admin',loginData);
+  let dbfin =  await DB.findUser(data);
   console.log('数据库查询结果：',dbfin);
   let obj = {};
   if (dbfin.length == 0){

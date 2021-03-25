@@ -34,6 +34,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(koaBody({
+  patchKoa: true,
   multipart: true,
   //encoding: 'gzip',
   formidable:{
@@ -42,6 +43,7 @@ app.use(koaBody({
     maxFieldsSize: 2*1024*1024,
     onFileBegin: (name,file)=>{
       // name: 数据名，file: 数据值
+      console.log("koa-body>>>>>",name,file);
     }
   }
 }))
