@@ -71,17 +71,20 @@ router.post('/upload', async (ctx, next)=>{
   let fileData = ctx.request.files;
   console.log('执行：',toolData);
   console.log('文件路径：',fileData);
-  let logopath = fileData.logo.path;
-  toolData.logourl = logopath.substr( logopath.indexOf('upload') );
-  console.log(toolData.logourl);
-  let addtodb =  await DB.insert('tools',toolData);
-  console.log('数据插入结果：',dbfin);
-  let obj = {};
-  if(addtodb){
-    obj = {code: 200, message: '添加成功！'}
-  }else{
-    obj = {code: 400, message: '添加失败！'}
-  }
+  let obj = {
+    code: 200,
+    message: '上传成功！',
+    data:{
+      fileName: fileData.name,
+      oldName: '',
+      fileUrl: '',
+    }
+  };
+  // if(addtodb){
+  //   obj = {code: 200, message: '上传成功！'}
+  // }else{
+  //   obj = {code: 400, message: '上传失败！'}
+  // }
   ctx.body = obj;
 })
 
