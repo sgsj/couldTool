@@ -35,16 +35,38 @@ app.use(async (ctx, next) => {
 
 var fileUrl = '/public';
 
-app.use(async (ctx, next)=>{
+app.use((ctx, next)=>{
   let url = ctx.request.url,
       toolLogoApi = /tool\/upload/;
 
+  console.log("匹配路由>>>>>",url);
   if (toolLogoApi.test(url)) {
     console.log("匹配路由：：",url);
     fileUrl = "/public/images/tools";
   }
-  await next();
+  // koaBody({
+  //   patchKoa: true,
+  //   multipart: true,
+  //   //encoding: 'gzip',
+  //   formidable:{
+  //     keepExtensions: true,
+  //     maxFieldsSize: 2*1024,
+  //     onFileBegin: (name,file)=>{
+  //       // name: 数据名，file: 数据值
+  //       console.log("koa-body>>>>>",name,file,fileUrl);
+  //       console.log("koa-body_2>>>>>",path.join(__dirname,fileUrl));
+  //     },
+  //     uploadDir: path.join(__dirname,fileUrl),
+  //   }
+  // })
+  next();
+  console.log("next>>>>>");
 });
+
+// function testFn(){
+//   return path.join(__dirname,fileUrl)
+// }
+
 app.use(koaBody({
   patchKoa: true,
   multipart: true,

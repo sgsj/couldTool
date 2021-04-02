@@ -5,7 +5,7 @@ const token = require('../../middleware/token');
 // router.prefix('/login')
 
 router.post('/', async (ctx, next)=>{
-  console.log("loginData>>>",ctx);
+  console.log("loginData>>>",ctx.request);
   // ctx.body = 'this is a login!'
 
   let loginData = ctx.request.body,
@@ -19,8 +19,11 @@ router.post('/', async (ctx, next)=>{
   } else {
     let userkey = token({user:dbfin[0].user,id:dbfin[0].id});
     obj = {code: 200, msg: '登录成功！',userkey}
+    console.log('登录成功！');
   }
-  ctx.body = obj;
+  ctx.response.body = obj;
+  console.log('ctx.body>>>',ctx.body);
+  await next();
 })
 router.post('/submit', async (ctx, next)=>{
   let loginData = ctx.request.body;
