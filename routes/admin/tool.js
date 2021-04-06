@@ -69,22 +69,20 @@ router.post('/add', async (ctx, next)=>{
 router.post('/upload', async (ctx, next)=>{
   let toolData = ctx.request.body;
   let fileData = ctx.request.files;
-  console.log('执行：',toolData);
+  // console.log('执行：',toolData);
   console.log('文件路径：',fileData);
+  let old_file_name = Object.keys(fileData)[0],
+      File = fileData[old_file_name];
+  console.log('File>>>>>',File,typeof old_file_name,Object.keys(fileData));
   let obj = {
     code: 200,
     message: '上传成功！',
     data:{
-      fileName: fileData.name,
-      oldName: '',
-      fileUrl: '',
+      fileName: File.newName,
+      oldName: old_file_name,
+      fileUrl: "/public/" + File.path.split("public/")[1],
     }
   };
-  // if(addtodb){
-  //   obj = {code: 200, message: '上传成功！'}
-  // }else{
-  //   obj = {code: 400, message: '上传失败！'}
-  // }
   ctx.body = obj;
 })
 
