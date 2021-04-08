@@ -49,14 +49,10 @@ router.post('/tool', async (ctx, next)=>{
 
 router.post('/add', async (ctx, next)=>{
   let toolData = ctx.request.body;
-  let fileData = ctx.request.files;
   console.log('执行：',toolData);
-  console.log('文件路径：',fileData);
-  let logopath = fileData.logo.path;
-  toolData.logourl = logopath.substr( logopath.indexOf('upload') );
-  console.log(toolData.logourl);
-  let addtodb =  await DB.insert('tools',toolData);
-  console.log('数据插入结果：',dbfin);
+  let dataArr = [toolData.title,toolData.brief,toolData.url,toolData.imgUrl]
+  let addtodb =  await DB.addTool(dataArr);
+  console.log('数据插入结果：',addtodb);
   let obj = {};
   if(addtodb){
     obj = {code: 200, message: '添加成功！'}

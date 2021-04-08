@@ -54,7 +54,7 @@ let sqlService = {
     },
     //工具-添加
     addTool: function(obj){
-        let _sql = "insert into tools set name=?,url=?,brief=?,imgUrl=?;"
+        let _sql = "insert into tools set title=?,brief=?,url=?,imgUrl=?;"
         return sqlService.query(_sql,obj);
     },
     //工具-删除
