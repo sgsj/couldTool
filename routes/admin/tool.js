@@ -76,7 +76,7 @@ router.post('/upload', async (ctx, next)=>{
     data:{
       fileName: File.newName,
       oldName: old_file_name,
-      fileUrl: "/public/" + File.path.split("public/")[1],
+      fileUrl: File.path.split("public/")[1],
     }
   };
   ctx.body = obj;

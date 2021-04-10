@@ -8,6 +8,7 @@ const koaBody = require('koa-body')
 const logger = require('koa-logger')
 const render = require('koa-art-template')
 const path = require('path')
+const static = require('koa-static')
 
 const index = require('./routes/index')
 const admin = require('./routes/admin')
@@ -71,7 +72,7 @@ app.use(koaBody({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(path.join(__dirname,'/public')))
+app.use(static(__dirname + '/public'))
 
 // app.use(views(__dirname + '/views', {
 //   extension: '.art'
